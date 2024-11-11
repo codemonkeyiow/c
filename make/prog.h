@@ -1,1 +1,1 @@
-#define PROG_NUMBER '1337'
+#define PROG_NUMBER "1337"
