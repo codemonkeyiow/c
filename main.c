@@ -8,7 +8,7 @@
 
 
 int main() {
-	int x = 10;
+  int x = 10;
   int l = intlength(x);
   char str[l+1];
   sprintf(str, "%d", x);
