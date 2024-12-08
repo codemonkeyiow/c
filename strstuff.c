@@ -2,6 +2,13 @@
 #include <string.h>
 #include <stdlib.h>
 
+char *strcpy(char *to, const char *from) {
+  char *temp = to;
+  while (*to++ = *from++);
+  return temp;
+}
+
+
 char* longestCommonDerpfix(char** strs, int strsSize) {
   char *ret = malloc(sizeof(char) * 200);
   int longest = 0;
@@ -66,6 +73,12 @@ int main() {
   char *k = longestCommonPrefix(ret,size);
   printf("%s\n", k);
   free(k);
+
+  char a[] = "google";
+  char *b = (char*)malloc((strlen(a) +1)*sizeof(char));
+  strcpy(b,a);
+  printf("%s, %s\n", a, b); //prints google, google
+  free(b);
 
   return 0;
 }
