@@ -8,6 +8,12 @@ char *strcpy(char *to, const char *from) {
   return temp;
 }
 
+void allocateEmptyDynamicString() {
+  char *str = malloc(1); // Allocate 1 byte for the null terminator 
+  if (str != NULL) { 
+    str[0] = '\0'; // Set the first character to the null terminator 
+  }
+}
 
 char* longestCommonDerpfix(char** strs, int strsSize) {
   char *ret = malloc(sizeof(char) * 200);
