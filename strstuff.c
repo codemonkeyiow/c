@@ -2,6 +2,18 @@
 #include <string.h>
 #include <stdlib.h>
 
+void sortStringsByLength(char** strs, int numStrs) {
+  for(int i = 0; i < numStrs - 1; i++) {
+    for(int j = i + 1; j < numStrs; j++) {
+      if(strlen(strs[i]) > strlen(strs[j])) {
+        char* temp = strs[i];
+        strs[j] = strs[i];
+        strs[i] = temp;
+      }
+    }
+  }
+}
+
 char *strcpy(char *to, const char *from) {
   char *temp = to;
   while (*to++ = *from++);
