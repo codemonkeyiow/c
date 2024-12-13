@@ -44,8 +44,9 @@ int missingInteger(int* nums, int numsSize) {
     }
   }
 
-  if(isInArray == 1 && isLargest == 0) return sum;
+  // NOT WORKING YET
 
+  if(isInArray == 1 && isLargest == 0) return sum;
   return nums[numsSize - 1] + 1;
 }
 
