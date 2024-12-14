@@ -1,3 +1,3 @@
 #pragma once
 
-typedef struct linkedlist linkedlist;
+typedef struct ListNode ListNode;
