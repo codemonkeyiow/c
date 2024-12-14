@@ -42,21 +42,24 @@ void push(ListNode **list, int value) {
 }
 
 int pop(ListNode **list) {
+  if(*list == NULL) {
+    printf("WARNING: popping NULL list\n");
+    return -1;
+  }
   int value = (*list)->value;
 
   ListNode *head = *list;
   *list = (*list)->next;
-
   free(head);
 
   return value;
 }
 
 int main() {
-  ListNode *list = (ListNode*) malloc(sizeof(ListNode));
+  ListNode *list = createNode(1);
   printList(list);
-  push(&list, 5);
-  push(&list, 15);
+  push(&list, 2);
+  push(&list, 3);
   printList(list);
   int p = pop(&list);
   printf("%d\n", p);
