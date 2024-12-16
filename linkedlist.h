@@ -5,6 +5,8 @@ typedef struct ListNode ListNode;
 void printList(ListNode*);
 ListNode* createNode(int value);
 void pushEnd(ListNode*, int);
-void push(ListNode**, int);
-int pop(ListNode**);
+ListNode* push(ListNode*, int);
+void pushP(ListNode**, int);
+int pop(ListNode*);
+int popP(ListNode**);
 
