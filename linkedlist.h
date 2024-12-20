@@ -9,4 +9,3 @@ ListNode* push(ListNode*, int);
 void pushP(ListNode**, int);
 int pop(ListNode*);
 int popP(ListNode**);
-

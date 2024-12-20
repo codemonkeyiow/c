@@ -9,10 +9,10 @@ struct ListNode {
 
 void printList(ListNode* list) {
   while(list != NULL) {
-    printf("%d ", list->value);
+    printf("%d -> ", list->value);
     list = list->next;
   }
-  putchar('\n');
+  printf("NULL\n");
 }
 
 ListNode* createNode(int value) {
@@ -41,6 +41,12 @@ void pushP(ListNode** list, int value) {
   *list = node;
 }
 
+ListNode* push(ListNode* list, int value) {
+  ListNode* node = createNode(value);
+  node->next = list;
+  return node;
+}
+
 int popP(ListNode** list) {
   if(*list == NULL) {
     printf("WARNING: popping NULL list\n");
@@ -53,12 +59,6 @@ int popP(ListNode** list) {
   free(head);
 
   return value;
-}
-
-ListNode* push(ListNode* list, int value) {
-  ListNode* node = createNode(value);
-  node->next = list;
-  return node;
 }
 
 int pop(ListNode* list) {
@@ -87,4 +87,3 @@ int main() {
   printList(list);
   return 0;
 }
-
