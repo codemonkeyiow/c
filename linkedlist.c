@@ -15,6 +15,15 @@ void printList(ListNode* list) {
   printf("NULL\n");
 }
 
+void deleteList(ListNode* list) {
+  ListNode* head;
+  while(list != NULL) {
+    head = list;
+    list = list->next;
+    free(head);
+  }
+}
+
 ListNode* createNode(int value) {
   ListNode* node = (ListNode*) malloc(sizeof(ListNode));
   if (!node) {
@@ -81,9 +90,12 @@ int main() {
   pushP(&list, 2);
   list = push(list, 3);
   printList(list);
-  //int p = popP(&list);
-  int p = pop(list);
+  int p = popP(&list);
+  // int p = pop(list);
   printf("%d\n", p);
   printList(list);
+
+  deleteList(list);
+
   return 0;
 }
