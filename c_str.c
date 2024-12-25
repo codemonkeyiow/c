@@ -9,6 +9,7 @@ int main() {
     }
     *(c_string + str_len) = '\n';
     printf("%s\n", c_string);
+    free(c_string);
 
     return 0;
 }
