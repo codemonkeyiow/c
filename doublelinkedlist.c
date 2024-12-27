@@ -48,3 +48,19 @@ void pushEnd(Node** tail, int value) {
   node->prev = tail;
   *tail = node;
 }
+
+int pop(Node* head) {
+  int value = head->value;
+  Node* node = head;
+  head = head->next;
+  free(node);
+  return value;
+}
+
+int popEnd(Node* tail) {
+  int value = tail->value;
+  Node* node = tail->prev;
+  tail = tail->prev;
+  free(node);
+  return value;
+}
