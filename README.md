@@ -2,4 +2,4 @@
 
 ## Linkage
 ### math.h
-`gcc file.c -lm`
+`gcc file.c -lm -Wall -Wextra`
