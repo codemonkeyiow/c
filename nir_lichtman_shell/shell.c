@@ -5,12 +5,13 @@
 
 int real_waitid(idtype_t idtype, id_t id, siginfo_t *infop, int options, void*);
 
-int main() {
+int main()
+{
   char command[255];
   for(;;) {
     write(1, "> ", 2);
     int count = read(0, command, 255);
-    command[count - 1] = 0; 
+    command[count - 1] = 0;
     pid_t fork_result = fork();
     if(fork_result == 0) {
       execve(command, 0, 0);
@@ -23,4 +24,3 @@ int main() {
 
   _exit(0);
 }
-
