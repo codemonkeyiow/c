@@ -1,5 +1,10 @@
 ```
-gcc -c hmm.c
+./build.sh
+```
+
+
+```
+gcc -c -fno-stack-protector hmm.c
 as hmm.S
 ld -o hmm hmm.o a.out --entry main -z noexecstack
 ```
