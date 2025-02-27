@@ -26,7 +26,17 @@ struct Connection
     struct Database *db;
 };
 
+void die(const char *message, struct Connection *conn);
+void Address_print(struct Address *addr);
+void Database_load(struct Connection *conn);
+struct Connection *Database_open(const char *filename, char mode);
 void Database_close(struct Connection *conn);
+void Database_write(struct Connection *conn);
+void Database_create(struct Connection *conn);
+void Database_set(struct Connection *conn, int id, const char *name, const char *email);
+void Database_get(struct Connection *conn, int id);
+void Database_delete(struct Connection *conn, int id);
+void Database_list(struct Connection *conn);
 
 void die(const char *message, struct Connection *conn)
 {
