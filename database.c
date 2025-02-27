@@ -5,7 +5,6 @@
 #include <string.h>
 
 #define MAX_DATA 512
-#define MAX_ROWS 100
 
 struct Address
 {
@@ -17,7 +16,8 @@ struct Address
 
 struct Database
 {
-    struct Address rows[MAX_ROWS];
+    int num_rows;
+    struct Address *rows;
 };
 
 struct Connection
@@ -32,11 +32,12 @@ void Database_load(struct Connection *conn);
 struct Connection *Database_open(const char *filename, char mode);
 void Database_close(struct Connection *conn);
 void Database_write(struct Connection *conn);
-void Database_create(struct Connection *conn);
+void Database_create(struct Connection *conn, int num_rows);
 void Database_set(struct Connection *conn, int id, const char *name, const char *email);
 void Database_get(struct Connection *conn, int id);
 void Database_delete(struct Connection *conn, int id);
 void Database_list(struct Connection *conn);
+void Check_bounds(struct Connection *conn, int id);
 
 void die(const char *message, struct Connection *conn)
 {
@@ -76,6 +77,7 @@ struct Connection *Database_open(const char *filename, char mode)
         die("Memory error", conn);
 
     conn->db = malloc(sizeof(struct Database));
+    conn->db->rows = malloc(conn->db->num_rows * sizeof(struct Address));
     if (!conn->db)
         die("Memory error", conn);
 
@@ -124,11 +126,13 @@ void Database_write(struct Connection *conn)
         die("Cannot flush database.", conn);
 }
 
-void Database_create(struct Connection *conn)
+void Database_create(struct Connection *conn, int num_rows)
 {
     int i = 0;
+    conn->db->rows = malloc(num_rows * sizeof(struct Address));
+    conn->db->num_rows = num_rows;
 
-    for (i = 0; i < MAX_ROWS; i++)
+    for (i = 0; i < num_rows; i++)
     {
         // make a prototype to initialize it
         struct Address addr = {.id = i, .set = 0};
@@ -180,7 +184,7 @@ void Database_list(struct Connection *conn)
     int i = 0;
     struct Database *db = conn->db;
 
-    for (i = 0; i < MAX_ROWS; i++)
+    for (i = 0; i < conn->db->num_rows; i++)
     {
         struct Address *cur = &db->rows[i];
 
@@ -189,6 +193,12 @@ void Database_list(struct Connection *conn)
             Address_print(cur);
         }
     }
+}
+
+void Check_bounds(struct Connection *conn, int id)
+{
+    if(id > conn->db->num_rows)
+        die("there's not that many records.", conn);
 }
 
 int main(int argc, char *argv[])
@@ -203,27 +213,28 @@ int main(int argc, char *argv[])
 
     if (argc > 3)
         id = atoi(argv[3]);
-    if (id >= MAX_ROWS)
-        die("There's not that many records.", conn);
 
     switch (action)
     {
     case 'c':
-        Database_create(conn);
+        if (argc != 4)
+            die("Need to specify number of rows", conn);
+        int num_rows = atoi(argv[3]);
+        Database_create(conn, num_rows);
         Database_write(conn);
         break;
 
     case 'g':
         if (argc != 4)
             die("Need an id to get", conn);
-
+        Check_bounds(conn, id);
         Database_get(conn, id);
         break;
 
     case 's':
         if (argc != 6)
             die("Need id, name, email to set", conn);
-
+        Check_bounds(conn, id);
         Database_set(conn, id, argv[4], argv[5]);
         Database_write(conn);
         break;
@@ -231,7 +242,7 @@ int main(int argc, char *argv[])
     case 'd':
         if (argc != 4)
             die("Need id to delete", conn);
-
+        Check_bounds(conn, id);
         Database_delete(conn, id);
         Database_write(conn);
         break;
