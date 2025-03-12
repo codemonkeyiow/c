@@ -7,14 +7,13 @@ struct B {
 };
 
 struct A {
-    int num_b;
     struct B *b;
 };
 
 int main() {
     struct A *a = malloc(sizeof(struct A));
-    a->num_b = 10;
-    a->b = malloc(sizeof(struct B) * a->num_b);
+    a->b = malloc(sizeof(struct B));
+    a->b->i = 10;
 
     return 0;
 }
