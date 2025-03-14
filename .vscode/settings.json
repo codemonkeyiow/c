@@ -12,6 +12,7 @@
         "type_traits": "c",
         "utility": "c",
         "stdlib.h": "c",
-        "list": "c"
+        "list": "c",
+        "linkedlist.h": "c"
     }
 }
