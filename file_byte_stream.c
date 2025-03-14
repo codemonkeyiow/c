@@ -1,8 +1,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+struct B {
+    int j;
+};
+
 struct A {
     int i;
+    struct B *b;
+    // struct B **bp;
 };
 
 void write_file() {
@@ -11,6 +17,8 @@ void write_file() {
 
     struct A *a = (struct A*) malloc(sizeof(struct A));
     a->i = 10;
+    a->b = (struct B*) malloc(sizeof(struct B));
+    a->b->j = 12;
 
     size_t written = fwrite(a, sizeof(struct A), 1, file);
     printf("%d\n", written);
@@ -25,7 +33,7 @@ void read_file() {
     struct A *a = (struct A*) malloc(sizeof(struct A));
 
     size_t read = fread(a, sizeof(struct A), 1, file);
-    printf("%d %d\n", read, a->i);
+    printf("%d %d %d\n", read, a->i, a->b->j);
 
     fclose(file);
 }
