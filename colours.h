@@ -1,4 +1,6 @@
 /* 
+ * https://en.wikipedia.org/wiki/ANSI_escape_code
+ *
  * EXAMPLE:
  * #include <stdio.h>
  * #include "colours.h"
