@@ -1,12 +1,15 @@
 #pragma once
 
-typedef struct ListNode ListNode;
+typedef struct node {
+	int value;
+	struct node *next;
+} node;
 
-void printList(ListNode*);
-void deleteList(ListNode*);
-ListNode* createNode(int value);
-void pushEnd(ListNode*, int);
-ListNode* push(ListNode*, int);
-void pushP(ListNode**, int);
-int pop(ListNode*);
-int popP(ListNode**);
+typedef struct linked_list {
+	node *head;
+	node *tail;
+	size_t length;
+} linked_list;
+
+node *create_node(const int value);
+linked_list *create_list(void);
