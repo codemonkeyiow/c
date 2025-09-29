@@ -1,15 +1,19 @@
 #pragma once
 
-typedef struct node {
+typedef struct Node {
 	int value;
-	struct node *next;
-} node;
+	struct Node *next;
+} Node;
 
-typedef struct linked_list {
-	node *head;
-	node *tail;
+typedef struct LinkedList {
+	Node *head;
+	Node *tail;
 	size_t length;
-} linked_list;
+} LinkedList;
 
-node *create_node(const int value);
-linked_list *create_list(void);
+Node *create_node(const int value);
+LinkedList *create_list(void);
+void push(const int value, LinkedList *list);
+int pop(LinkedList *list);
+void print_list(LinkedList *list);
+void bubble_sort(LinkedList *list);
