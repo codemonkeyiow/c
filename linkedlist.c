@@ -71,7 +71,7 @@ void print_list(LinkedList *list)
 	printf("\n-Print List-\n");
 	Node *node = list->head;
 	int index = 0;
-	while(node != NULL) {
+	while (node != NULL) {
 		printf(" %d:\t%d\n", index, node->value);
 		node = node->next;
 		index++;
@@ -84,18 +84,23 @@ void bubble_sort(LinkedList *list)
 
 	bool sorted = false;
 	Node *node;
+	int passes = 0;
+
+	printf("\n-Sort List-\n");
 
 	while (!sorted) {
+		printf(" pass %d...\n", ++passes);
 		sorted = true;
 		node = list->head;
 		while (node->next != NULL) {
 			if (node->value > node->next->value) {
 				sorted = false;
-				int v = node->value;
+				int value = node->value;
 				node->value = node->next->value;
-				node->next->value = v;
+				node->next->value = value;
 			}
 			node = node->next;
 		}
 	}
+	printf("\n ...sorted!\n");
 }
