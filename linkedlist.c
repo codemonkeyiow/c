@@ -1,106 +1,101 @@
-#include <assert.h>
-#include <stdbool.h>
+#include "linkedlist.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "linkedlist.h"
+struct ListNode {
+	int value;
+	ListNode* next;
+};
 
-int main(int argc, char *argv[])
-{
-	LinkedList *list = create_list();
-	push(5,list);
-	print_list(list);
-	push(15,list);
-	push(25,list);
-	print_list(list);
-	bubble_sort(list);
-	print_list(list);
-
-	pop(list);
-	pop(list);
-	print_list(list);
-	return 0;
+void printList(ListNode* list) {
+  while(list != NULL) {
+    printf("%d -> ", list->value);
+    list = list->next;
+  }
+  printf("NULL\n");
 }
 
-Node *create_node(const int value)
-{
-	Node *const node = malloc(sizeof(Node));
-	assert(node != NULL);
-	node->value = value;
-	node->next = NULL;
-	return node;
+void deleteList(ListNode* list) {
+  ListNode* head;
+  while(list != NULL) {
+    head = list;
+    list = list->next;
+    free(head);
+  }
 }
 
-LinkedList *create_list(void)
-{
-	LinkedList *list = malloc(sizeof(LinkedList));
-	assert(list != NULL);
-	list->head = NULL;
-	list->tail = NULL;
-	list->length = 0;
-	return list;
+ListNode* createNode(int value) {
+  ListNode* node = (ListNode*) malloc(sizeof(ListNode));
+  if (!node) {
+    printf("ERROR: createNode failed\n");
+    return NULL;
+  }
+  node->value = value;
+  node->next = NULL;
+  return node;
 }
 
-void push(const int value, LinkedList *list)
-{
-	Node *node = create_node(value);
-	node->next = list->head;
-	list->head = node;
-	list->length++;
-	printf("\n-Push List-\n %d list->length %d\n", node->value, list->length);
+void pushEnd(ListNode* list, int value) {
+  ListNode* node = createNode(value);
+  // traverse to the end
+  while(list->next != NULL) {
+    list = list->next;
+  }
+  list->next = node;
 }
 
-int pop(LinkedList *list)
-{
-	int value = list->head->value;
-
-	Node *head = list->head;
-	list->head = list->head->next;
-	free(head);
-
-	list->length--;
-
-	printf("\n-Pop List-\n %d list->length %d\n", value, list->length);
-
-	return value;
+void pushP(ListNode** list, int value) {
+  ListNode* node = createNode(value);
+  node->next = *list;
+  *list = node;
 }
 
-void print_list(LinkedList *list)
-{
-	if (list == NULL) return;
-	printf("\n-Print List-\n");
-	Node *node = list->head;
-	int index = 0;
-	while (node != NULL) {
-		printf(" %d:\t%d\n", index, node->value);
-		node = node->next;
-		index++;
-	}
+ListNode* push(ListNode* list, int value) {
+  ListNode* node = createNode(value);
+  node->next = list;
+  return node;
 }
 
-void bubble_sort(LinkedList *list)
-{
-	if (list == NULL) return;
+int popP(ListNode** list) {
+  if(*list == NULL) {
+    printf("WARNING: popping NULL list\n");
+    return -1;
+  }
+  int value = (*list)->value;
 
-	bool sorted = false;
-	Node *node;
-	int passes = 0;
+  ListNode* head = *list;
+  *list = (*list)->next;
+  free(head);
 
-	printf("\n-Sort List-\n");
+  return value;
+}
 
-	while (!sorted) {
-		printf(" pass %d...\n", ++passes);
-		sorted = true;
-		node = list->head;
-		while (node->next != NULL) {
-			if (node->value > node->next->value) {
-				sorted = false;
-				int value = node->value;
-				node->value = node->next->value;
-				node->next->value = value;
-			}
-			node = node->next;
-		}
-	}
-	printf("\n ...sorted!\n");
+int pop(ListNode* list) {
+  if(list == NULL) {
+    printf("WARNING: popping NULL list\n");
+    return -1;
+  }
+  int value = list->value;
+
+  ListNode* head = list;
+  list = list->next;
+  free(head);
+
+  return value;
+}
+
+int main() {
+  ListNode* list = createNode(1);
+  printList(list);
+  pushP(&list, 2);
+  list = push(list, 3);
+  printList(list);
+  int p = popP(&list);
+  // int p = pop(list);
+  printf("%d\n", p);
+  printList(list);
+
+  deleteList(list);
+
+  return 0;
 }

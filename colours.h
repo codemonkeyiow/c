@@ -6,8 +6,8 @@
  * #include "colours.h"
  *
  * int main() {
- *   set_color(FG_RED);
- *   set_color(BG_GREEN);
+ *   set_colour(FG_RED);
+ *   set_colour(BG_GREEN);
  *   bold();
  *   printf("Yo!\n");
  *   reset();
@@ -35,18 +35,18 @@ enum Code {
   BG_WHITE    = 47,
 };
 
-void reset() {
+void reset_colour(void) {
   printf("\033[0m");
 }
 
-void set_color(int code) {
+void set_colour(const int code) {
   printf("\033[%dm", code);
 }
 
-void bold() {
+void bold(void) {
   printf("\033[1m");
 }
 
-void italic() {
+void italic(void) {
   printf("\033[3m");
 }
